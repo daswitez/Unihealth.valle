@@ -4,8 +4,8 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 
-from .jwt_utils import create_access_token, create_refresh_token, decode_token
-from .serializers import AuthResult
+from accounts.jwt_utils import create_access_token, create_refresh_token, decode_token
+from accounts.serializers import AuthResult
 
 
 class JwtUtilsTests(TestCase):
@@ -60,6 +60,4 @@ class AuthViewsTests(TestCase):
         res = self.client.get(url)
         # Sin credenciales, DRF responde 403 (Forbidden) con IsAuthenticated
         self.assertEqual(res.status_code, 403)
-from django.test import TestCase
 
-# Create your tests here.

@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS app.roles (
   id BIGSERIAL PRIMARY KEY,
   nombre VARCHAR(32) NOT NULL UNIQUE
 );
+ALTER TABLE app.roles ADD COLUMN IF NOT EXISTS descripcion TEXT;
 
 CREATE TABLE IF NOT EXISTS app.usuarios (
   id BIGSERIAL PRIMARY KEY,
@@ -99,6 +100,4 @@ class AlertsFlowTests(TestCase):
         res = c.post(reverse("alert-status", args=[alert_id]), {"estado": "resuelta"}, format="json")
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.data["estado"], "resuelta")
-from django.test import TestCase
 
-# Create your tests here.

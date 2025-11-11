@@ -111,6 +111,4 @@ class MedicalEndpointsTests(TestCase):
         res = self.client.get(reverse("vitals-by-patient", args=[self.patient.id]))
         self.assertEqual(res.status_code, 200)
         self.assertTrue(len(res.data) >= 1)
-from django.test import TestCase
 
-# Create your tests here.

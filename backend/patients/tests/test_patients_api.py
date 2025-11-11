@@ -12,9 +12,9 @@ CREATE SCHEMA IF NOT EXISTS app;
 
 CREATE TABLE IF NOT EXISTS app.roles (
   id BIGSERIAL PRIMARY KEY,
-  nombre VARCHAR(32) NOT NULL UNIQUE,
-  descripcion TEXT
+  nombre VARCHAR(32) NOT NULL UNIQUE
 );
+ALTER TABLE app.roles ADD COLUMN IF NOT EXISTS descripcion TEXT;
 
 CREATE TABLE IF NOT EXISTS app.usuarios (
   id BIGSERIAL PRIMARY KEY,
@@ -111,6 +111,4 @@ class PatientsEndpointsTests(TestCase):
         self.assertEqual(res.status_code, 201)
         self.assertEqual(len(res.data), 1)
         self.assertEqual(res.data[0]["version"], "v1.0")
-from django.test import TestCase
 
-# Create your tests here.

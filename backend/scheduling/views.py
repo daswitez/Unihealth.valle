@@ -29,8 +29,8 @@ def _generate_slots_for_day(enfermero_id: int, day: datetime, slot_minutes: int)
     blocks = Agenda.objects.filter(enfermero_id=enfermero_id, dia_semana=weekday)
     slots: List[Tuple[datetime, datetime]] = []
     for b in blocks:
-        block_start = timezone.make_aware(datetime.combine(day.date(), b.hora_inicio)) if timezone.is_naive(day) else datetime.combine(day.date(), b.hora_inicio).astimezone(timezone.utc)
-        block_end = timezone.make_aware(datetime.combine(day.date(), b.hora_fin)) if timezone.is_naive(day) else datetime.combine(day.date(), b.hora_fin).astimezone(timezone.utc)
+        block_start = timezone.make_aware(datetime.combine(day.date(), b.hora_inicio))
+        block_end = timezone.make_aware(datetime.combine(day.date(), b.hora_fin))
         cur = block_start
         while cur + timedelta(minutes=slot_minutes) <= block_end:
             slots.append((cur, cur + timedelta(minutes=slot_minutes)))
