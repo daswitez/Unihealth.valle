@@ -37,15 +37,64 @@ Colección Postman y guías:
 
 ## Pruebas (pytest)
 
-Instalado: pytest, pytest-django.
+Instalado: pytest, pytest-django, pytest-cov. Las pruebas usan PostgreSQL (según `config/settings.py`). Durante los tests cada suite crea el esquema/tablas mínimas con SQL, por lo que no dependemos de migraciones; necesitas igualmente una base de datos PostgreSQL accesible.
+
+1) Preparación (una vez)
+
+- Asegúrate de tener PostgreSQL corriendo localmente y una BD creada (por defecto `unihealth`).
+- Crea `.env` en la raíz del repo con credenciales (ejemplo mínimo):
+
+```env
+DJANGO_SECRET_KEY=dev-secret-please-change
+DB_NAME=unihealth
+DB_USER=postgres
+DB_PASSWORD=tu_password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+2) Activar venv e instalar dependencias
+
+```powershell
+cd "C:\Users\Silvia Subirana\Documents\uniHealth"
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+3) Ejecutar todos los tests (con cobertura)
 
 ```powershell
 cd backend
 ..\.venv\Scripts\python.exe -m pytest
 ```
 
+4) Ejecutar por app/archivo/expresión
+
+- Por archivo:
+```powershell
+..\.venv\Scripts\python.exe -m pytest accounts/tests/test_auth.py
+```
+- Por palabra clave:
+```powershell
+..\.venv\Scripts\python.exe -m pytest -k "register or login"
+```
+- Ver salida detallada (sin -q) y solo fallos primero:
+```powershell
+..\.venv\Scripts\python.exe -m pytest -x -vv
+```
+
+5) Cobertura
+
+- Consola (ya activada por defecto): `--cov=backend --cov-report=term-missing`
+- HTML (reporte navegable):
+```powershell
+..\.venv\Scripts\python.exe -m pytest --cov=backend --cov-report=html
+start .\htmlcov\index.html
+```
+
 Tests incluidos (por app):
-- accounts: login/refresh
+- accounts: register/login/refresh/me
 - patients: perfil y consentimientos
 - medical: creación de registro y signos vitales
 - alerts: flujo crear → asignar → cerrar
